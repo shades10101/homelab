@@ -1,4 +1,6 @@
 # homelab
+In this repo you can run Terraform to create k8s cluster that has 1 master and 3 workers. Ansible playbook to automate the creation of the kubernetes cluster. And finally a collection of yamls/helm values that I used to create applications (pihole, metalLB, nginx-ingress, pv, pvcs, storageclasses, etc. ) and configurations on my cluster.
+
 
 # Add a drive to proxmox
 ```
