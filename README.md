@@ -2,7 +2,7 @@
 
 # Add a drive to proxmox
 lsblk
-- Find new drive for below ###
+Find new drive for below ###
 parted /dev/### mklabel gpt
 parted -a opt /dev/### mkpart primary ext4 0% 100%
 mkfs.ext4 -L storageprox /dev/###1
