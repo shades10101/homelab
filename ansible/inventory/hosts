@@ -1,0 +1,11 @@
+[k8s:children]
+masters
+workers
+
+[masters]
+10.0.0.177 ansible_user=shahid ansible_python_interpreter=/usr/bin/python3
+
+[workers]
+10.0.0.249 ansible_user=shahid ansible_python_interpreter=/usr/bin/python3
+10.0.0.158 ansible_user=shahid ansible_python_interpreter=/usr/bin/python3
+10.0.0.119 ansible_user=shahid ansible_python_interpreter=/usr/bin/python3

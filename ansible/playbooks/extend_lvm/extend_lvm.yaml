@@ -1,0 +1,8 @@
+---
+
+- hosts: ' {{ host_group | default("new") }}'
+  gather_facts: true
+  tasks:
+
+    - include_role:
+        name: extend_lvm
