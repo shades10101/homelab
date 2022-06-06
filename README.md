@@ -1,6 +1,7 @@
 # homelab
 
 # Add a drive to proxmox
+```
 lsblk
 Find new drive for below ###
 parted /dev/### mklabel gpt
@@ -12,4 +13,4 @@ Add this:    LABEL=NAME_IT /mnt/data ext4 defaults 0 2
 mount -a
 Now in the Proxmox GUI go to Datacenter -> Storage -> Add -> Directory.
 Add directory path, and choose the content, this will set what goes to the drives. 
-
+```
