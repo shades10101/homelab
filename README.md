@@ -16,3 +16,21 @@ mount -a
 Now in the Proxmox GUI go to Datacenter -> Storage -> Add -> Directory.
 Add directory path, and choose the content, this will set what goes to the drives. 
 ```
+
+# Steps to create k8d homelab on proxmox
+```
+1) Create VM template, and set the correct name in tf-vars
+2) Init terraofrm & apply: terraform apply -var-file="vars.tfvars"
+3) Once that is done update hostnames and hosts file on server
+4) Create proper inventory file for ansible
+5) Run k8s cluster using k8s-init
+Add worker: ansible-playbook -i ../../inventory/hosts -e VAULT_ubuntu_user='' main.yaml --ask-become-pass
+```
+
+# Join node to control plane
+Run below on master
+
+kubeadm token create --certificate-key
+kubeadm token create --print-join-command --certificate-key
+
+Get the output and run that on the new master. 

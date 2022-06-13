@@ -25,7 +25,7 @@ provider "proxmox" {
 
 resource "proxmox_vm_qemu" "proxmox_vm_master" {
   count       = var.num_k8s_masters
-  name        = "k8s-master-${count.index}"
+  name        = "k8s-master-${count.index + 1}"
   target_node = var.pm_node_name
   clone       = var.tamplate_vm_name
   os_type     = "ubuntu"
@@ -47,7 +47,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
 
 resource "proxmox_vm_qemu" "proxmox_vm_workers" {
   count       = var.num_k8s_nodes
-  name        = "k8s-worker-${count.index}"
+  name        = "k8s-worker-${count.index + 3}"
   target_node = var.pm_node_name
   clone       = var.tamplate_vm_name
   os_type     = "ubuntu"

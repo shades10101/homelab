@@ -1,5 +1,4 @@
----
-- hosts: k8s
+- hosts: new-workers 
   become: yes
   tasks:
 
@@ -69,54 +68,19 @@
         name: kubectl=1.22.4-00
         state: present
         force: yes
-    
-    - name: initialize the cluster
-      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
-      args:
-        chdir: $HOME
-        creates: cluster_initialized.txt
-      become: true
-      when: "'masters' in group_names"
 
-    - name: create .kube directory
-      become: yes
-      become_user: "{{ VAULT_ubuntu_user }}"
-      file:
-        path: $HOME/.kube
-        state: directory
-        mode: 0755
-
-    - name: copy admin.conf to user's kube config
-      copy:
-        src: /etc/kubernetes/admin.conf
-        dest: /home/{{ VAULT_ubuntu_user }}/.kube/config
-        remote_src: yes
-        owner: "{{ VAULT_ubuntu_user }}"
-      when: "'masters' in group_names"
-      become: true
-
-    - name: install Pod network
-      become: yes
-      become_user: "{{ VAULT_ubuntu_user }}"
-      shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml >> pod_network_setup.txt
-      args:
-        chdir: $HOME
-        creates: pod_network_setup.txt
-      delegate_to: "{{ groups['masters'][0] }}"
-
-    - name: get join command
+    - name: Generate join token
       shell: kubeadm token create --print-join-command
-      register: join_command_raw
-      when: "'masters' in group_names"
-
-    - name: set join command
-      set_fact:
-        join_command: "{{ join_command_raw.stdout_lines[0] }}"
-      when: "'masters' in group_names"
-
-    - name: join cluster
-      shell: "{{ hostvars['k8s-master-1'].join_command }} >> node_joined.txt"
-      args:
-        chdir: $HOME
-        creates: node_joined.txt
-      when: "'workers' in group_names"
+      register: kubeadm_join_cmd
+      delegate_to: "{{ groups['masters'][0] }}"
+    
+    - set_fact:
+        kubeadm_join: "{{ kubeadm_join_cmd.stdout }}"
+    
+    - debug: var=kubeadm_join
+    
+    - name: Store join command
+      action: copy content="{{ kubeadm_join }}" dest="/etc/kubernetes/kubeadm-join.command"
+    
+    - name: Run kubeadm join
+      shell: "{{ kubeadm_join }} --ignore-preflight-errors=swap"
