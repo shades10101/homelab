@@ -7,5 +7,5 @@ metadata:
 provisioner: example.com/external-nfs
 parameters:
   server: 10.0.0.50
-  path: /mnt/DataDrive/nfs
+  path: /mnt/nfs/
   readOnly: "false"

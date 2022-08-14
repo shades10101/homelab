@@ -1,3 +1,10 @@
+# NFS provisioner via helm
+
+helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisione
+
+helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --set nfs.server=10.0.0.50 --set nfs.path=/mnt/DataDrive
+
+
 # Install NFS on a server of your choice
  
 sudo apt-get install nfs-kernel-server -y
