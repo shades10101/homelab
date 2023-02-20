@@ -1,0 +1,6 @@
+- name: Set authorized key took from file
+  authorized_key:
+    user: shahid
+    state: present
+    key: "{{ lookup('file', '/home/shahid/.ssh/homelab.pub') }}"
+    become: true

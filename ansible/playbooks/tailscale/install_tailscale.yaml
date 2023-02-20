@@ -1,0 +1,21 @@
+---
+- hosts: k8s
+  become: yes
+  tasks:
+
+    - name: Pass variables to role
+      ansible.builtin.include_role:
+        name: ssh_key
+
+    - name: Add an Apt signing key, uses whichever key is at the URL
+      ansible.builtin.apt_key:
+        url: https://pkgs.Tailscale.com/stable/ubuntu/focal.gpg
+        state: present
+
+    - name: Install tailscale
+      ansible.builtin.apt:
+        name: Tailscale
+
+    - name: set application to be up
+      ansible.builtin.shell: Tailscale up
+      become: yes

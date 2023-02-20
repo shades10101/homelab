@@ -1,0 +1,37 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: headers-default
+  namespace: traefik
+
+spec:
+  headers:
+    browserXssFilter: true
+    contentTypeNosniff: true
+    forceSTSHeader: true
+    stsIncludeSubdomains: true
+    stsPreload: true
+    stsSeconds: 15552000
+    customFrameOptionsValue: SAMEORIGIN
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+  namespace: traefik
+
+spec:
+  entryPoints:
+    - websecure
+
+  routes:
+    - match: Host(`whoami.example.com`)
+      kind: Rule
+      middlewares:
+        - name: headers-default
+          namespace: traefik
+      services:
+        - name: whoami
+          port: 80
