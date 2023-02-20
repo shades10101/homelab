@@ -1,0 +1,11 @@
+- hosts: ' {{ host_group | default("new") }}'
+  gather_facts: true
+  tasks:
+
+  #- include_role:
+  #      name: extend_lvm
+  #  tags: extend
+
+  - name: Install packages
+    include_role:
+      name: packages

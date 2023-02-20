@@ -1,20 +1,24 @@
 ---
-- hosts: all
+- hosts: k8s
   become: yes
   tasks:
-    - name: create the '{{ VAULT_ubuntu_user }}' user
-      user: name={{ VAULT_ubuntu_user }} append=yes state=present createhome=yes shell=/bin/bash
+
+    - name: Disable swap for current session
+      command: swapoff -a
+      become: true
+
+    - name: Disable swap permanently, persist reboots
+      replace:
+        path: /etc/fstab
+        regexp: '^(\s*)([^#\n]+\s+)(\w+\s+)swap(\s+.*)$'
+        replace: '#\1\2\3swap\4'
+        backup: yes
 
     - name: allow '{{ VAULT_ubuntu_user }}' to have passwordless sudo
       lineinfile:
         dest: /etc/sudoers
         line: '{{ VAULT_ubuntu_user }} ALL=(ALL) NOPASSWD: ALL'
         validate: 'visudo -cf %s'
-
-    - name: set up authorized keys for the {{ VAULT_ubuntu_user }} user
-      authorized_key: user={{ VAULT_ubuntu_user }} key="{{item}}"
-      with_file:
-        - ~/.ssh/id_rsa.pub
     
     - name: create Docker config directory
       file: path=/etc/docker state=directory
@@ -71,6 +75,8 @@
       args:
         chdir: $HOME
         creates: cluster_initialized.txt
+      become: true
+      when: "'masters' in group_names"
 
     - name: create .kube directory
       become: yes
@@ -86,6 +92,8 @@
         dest: /home/{{ VAULT_ubuntu_user }}/.kube/config
         remote_src: yes
         owner: "{{ VAULT_ubuntu_user }}"
+      when: "'masters' in group_names"
+      become: true
 
     - name: install Pod network
       become: yes
@@ -106,7 +114,7 @@
       when: "'masters' in group_names"
 
     - name: join cluster
-      shell: "{{ hostvars['k8s-master-1'].join_command }} >> node_joined.txt"
+      shell: "{{ hostvars['10.0.0.177'].join_command }} >> node_joined.txt"
       args:
         chdir: $HOME
         creates: node_joined.txt

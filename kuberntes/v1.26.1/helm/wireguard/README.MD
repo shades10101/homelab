@@ -1,0 +1,1 @@
+helm install netmaker/netmaker --generate-name --set wireguard.kernel=true --set baseDomain=vp.shahid-ahmed.com --set replicas=3 --set ingress.enabled=true --set ingress.className=traefik --set ingress.tls.issuerName=letsencrypt-prod --set dns.enabled=true  --set dns.clusterIP=10.245.75.75 --set dns.RWX.storageClassName=nfs-client  --set postgresql-ha.postgresql.replicaCount=2 

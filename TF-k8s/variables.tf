@@ -14,7 +14,7 @@ variable "pm_password" {
 variable "pm_tls_insecure" {
   description = "Set to true to ignore certificate errors"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "pm_host" {
@@ -43,7 +43,7 @@ variable "num_k8s_nodes" {
 }
 
 variable "num_k8s_nodes_mem" {
-  default = "4096"
+  default = "8192"
 }
 
 variable "tamplate_vm_name" {}
@@ -61,5 +61,5 @@ variable "networkrange" {
 }
 
 variable "gateway" {
-  default = "192.168.3.1"
+  default = "10.0.0.1"
 }

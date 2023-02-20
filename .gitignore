@@ -7,9 +7,13 @@ TODO.md
 terraform/variables.tfvars
 terraform/.terraform.tfstate.lock.info
 terraform/terraform-plugin-proxmox.log
+ansible/vault.yml
 
 # Local .terraform directories
 **/.terraform/*
+
+#
+*secret*
 
 # .tfstate files
 *.tfstate

@@ -1,0 +1,16 @@
+# Install provioner:
+# helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+# helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
+#    --set nfs.server=10.0.0.250 \
+#    --set nfs.path=/mnt/DataDrive/nfs 
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: main-nfs
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: example.com/external-nfs
+parameters:
+  server: 10.0.0.250
+  path: /mnt/DataDrive/nfs
+  readOnly: "false"

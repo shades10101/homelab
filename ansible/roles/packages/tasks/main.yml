@@ -1,0 +1,15 @@
+- name: Update all packages to their latest version
+  apt:
+    name: "*"
+    state: latest
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+
+- name: Install a list of packages
+  apt:
+    pkg:
+    - helm
+    - nfs-common
+  tags: k8s
