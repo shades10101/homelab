@@ -9,10 +9,11 @@ terraform/.terraform.tfstate.lock.info
 terraform/terraform-plugin-proxmox.log
 ansible/vault.yml
 
+
 # Local .terraform directories
 **/.terraform/*
 
-#
+
 *secret*
 
 # .tfstate files
@@ -46,3 +47,4 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+vault.yml

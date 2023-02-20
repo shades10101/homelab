@@ -64,5 +64,4 @@ resource "proxmox_vm_qemu" "proxmox_vm_workers" {
       network
     ]
   }
-
 }
