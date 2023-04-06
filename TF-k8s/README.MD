@@ -6,4 +6,4 @@ destroy:
 
 Terraform destroy
 
-Build
+Build k8s
