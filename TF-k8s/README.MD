@@ -2,4 +2,4 @@ Terraform READ ME:
 
 Terraform apply --auto-approve
 
-Terraform destro
+Terraform destroy
