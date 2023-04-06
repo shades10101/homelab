@@ -1,1 +1,1 @@
-# This repo includes all things k8s that I ran into.
+new cluster is running on 1.26.1
