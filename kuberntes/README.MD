@@ -1,1 +1,1 @@
-new cluster is running on 1.26.1
+new cluster is running on 1.26.1.
