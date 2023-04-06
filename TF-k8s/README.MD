@@ -1,3 +1,3 @@
 Terraform READ ME:
 
-Terraform apply --
+Terraform apply --auto
