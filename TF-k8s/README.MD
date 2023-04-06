@@ -2,4 +2,4 @@ Terraform READ ME:
 
 Terraform apply --auto-approve
 
-Terrafo
+Terrafor
