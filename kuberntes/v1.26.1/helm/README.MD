@@ -9,3 +9,5 @@ helm upgrade ~~~~
 helm repo list
 
 helm show values/chart > txtfile
+
+helm pull ~~~~ 
