@@ -5,3 +5,5 @@ Terraform apply --auto-approve
 destroy:
 
 Terraform destroy
+
+Build
