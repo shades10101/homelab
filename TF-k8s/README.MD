@@ -1,3 +1,3 @@
 Terraform READ ME:
 
-Terraform apply --auto
+Terraform apply --auto-approve
