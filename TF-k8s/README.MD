@@ -6,4 +6,4 @@ destroy:
 
 Terraform destroy
 
-Build k8s cluster via 
+Build k8s cluster via proxmox
